@@ -5,7 +5,7 @@ pL1=exp(-1*abs(x-a1)./b1)./(b1.*2); % First class
 pL2=exp(-1*abs(x-a2)./b2)./(b2.*2); % Second class
 lx=log(pL1)-log(pL2); % log-likelihood ratio
 figure
-plot(x,lx);
+plot(x,lx, 'k', 'LineWidth', 1.5);
 grid on
 ylabel('p(L=l)|x');
 xlabel('x');
