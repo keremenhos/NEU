@@ -102,8 +102,8 @@ for i = 1:4
                 t = t+1;
             end
             % Validation
-            loglikelihoodtrain(k,M) = sum(log(evalGMM(xTrain,alpha,mu,Sigma)))/(length(indTrain));
-            loglikelihoodvalidate(k,M) = sum(log(evalGMM(xValidate,alpha,mu,Sigma)))/(N(i)-length(indTrain));
+            loglikelihoodtrain(k,M) = sum(log(evalGMM(xTrain,alpha,mu,Sigma)));
+            loglikelihoodvalidate(k,M) = sum(log(evalGMM(xValidate,alpha,mu,Sigma)));
         end
         Averagelltrain(1,M) = mean(loglikelihoodtrain(:,M)); % average training MSE over folds
         BICtrain(1,M) = -2*Averagelltrain(1,M)+M*log(N(i));
@@ -122,7 +122,7 @@ grid on
 
 
 figure(i+4), clf,
-plot(Averagelltrain,'.b'); hold on; plot(Averagellvalidate,'rx');
+plot(BICtrain,'.b'); hold on; plot(BICvalidate,'rx');
 xlabel('GMM Number'); ylabel(strcat('BIC estimate with ',num2str(K),'-fold cross-validation'));
 legend('Training BIC','Validation BIC');
 grid on
