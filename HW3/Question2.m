@@ -26,7 +26,7 @@ f = @(w,z)(-1/nSamples).*(sum(log(1./(1+exp([w(1) w(2)]*z(:,classIndex==2)+w(3))
 z = data';
 fun = @(w)f(w,z);
 x0 = [wLDA(1) wLDA(2) bLDA];
-minValues = fminsearch(fun, x0);
+minValues = fminsearch(fun, x0, options);
 
 y = 1./(1+exp([minValues(1) minValues(2)]*data'+minValues(3)));
 labelMAP = zeros(1,nSamples);
