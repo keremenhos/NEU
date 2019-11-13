@@ -46,8 +46,15 @@ indB3 = reshape(indB3, [321,481]);
 indB4 = reshape(indB4, [321,481]);
 indB5 = reshape(indB5, [321,481]);
 % Visualization
-figure(1); imagesc(indP2); figure(2); imagesc(indP3); figure(3); imagesc(indP4); figure(4); imagesc(indP5)
-figure(5); imagesc(indB2); figure(6); imagesc(indB3); figure(7); imagesc(indB4); figure(8); imagesc(indB5)
+figure(1); imagesc(indP2); title('Clustering with K-means algorithm for K = 2');
+figure(2); imagesc(indP3); title('Clustering with K-means algorithm for K = 3');
+figure(3); imagesc(indP4); title('Clustering with K-means algorithm for K = 4');
+figure(4); imagesc(indP5); title('Clustering with K-means algorithm for K = 5');
+figure(5); imagesc(indB2); title('Clustering with K-means algorithm for K = 2');
+figure(6); imagesc(indB3); title('Clustering with K-means algorithm for K = 3');
+figure(7); imagesc(indB4); title('Clustering with K-means algorithm for K = 4');
+figure(8); imagesc(indB5); title('Clustering with K-means algorithm for K = 5');
+
 
 %% GMM + MAP
 % First Image
@@ -71,7 +78,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(9); imagesc(decisioN)
+figure(9); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 2')
 
 % K = 3
 gmm = fitgmdist(plane,3);
@@ -96,7 +103,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(10); imagesc(decisioN)
+figure(10); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 3')
 
 % K = 4
 gmm = fitgmdist(plane,4);
@@ -124,7 +131,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(11); imagesc(decisioN)
+figure(11); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 4')
 
 % K = 5
 gmm = fitgmdist(plane,5);
@@ -155,7 +162,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(12); imagesc(decisioN)
+figure(12); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 5')
 
 % Second Image
 % K = 2
@@ -178,7 +185,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(13); imagesc(decisioN)
+figure(13); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 2')
 
 % K = 3
 gmm = fitgmdist(bird,3);
@@ -203,7 +210,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(14); imagesc(decisioN)
+figure(14); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 3')
 
 % K = 4
 gmm = fitgmdist(bird,4);
@@ -231,7 +238,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(15); imagesc(decisioN)
+figure(15); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 4')
 
 % K = 5
 gmm = fitgmdist(bird,5);
@@ -262,7 +269,7 @@ for i = 1:totPixel
 end
 % Visualization
 decisioN = reshape(decision, [321,481]);
-figure(16); imagesc(decisioN)
+figure(16); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 5')
 
 function g = evalGaussian(x,mu,Sigma)
     % Evaluates the Gaussian pdf N(mu,Sigma) at each coumn of X
