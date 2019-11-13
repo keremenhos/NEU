@@ -271,6 +271,7 @@ end
 decisioN = reshape(decision, [321,481]);
 figure(16); imagesc(decisioN); title('Clustering with GMM+MAP algorithm for K = 5')
 
+%% Functions
 function g = evalGaussian(x,mu,Sigma)
     % Evaluates the Gaussian pdf N(mu,Sigma) at each coumn of X
     [n,N] = size(x);
