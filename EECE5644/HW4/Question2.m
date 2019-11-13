@@ -27,7 +27,7 @@ legend('Class -1','Class +1'),
 title('Training Data with Real Population/Class Labels'),
 xlabel('x_1'), ylabel('x_2'), hold off
 % Generate independent test samples
-labelIndep = rand(1,N) >= p(1); lv = 2*(labelIndep-0.5);
+labelIndep = rand(1,N) >= p(1); lIndep = 2*(labelIndep-0.5);
 % Number of samples from each class
 NcIndep = [length(find(labelIndep==0)),length(find(labelIndep==1))]; 
 xIndep = zeros(n,N); 
@@ -100,22 +100,22 @@ ind11 = find(d==1 & l==1);
 figure(4); plot(x(1,ind00),x(2,ind00),'og'); hold on; plot(x(1,ind10),x(2,ind10),'or'); 
 plot(x(1,ind01),x(2,ind01),'+r'); plot(x(1,ind11),x(2,ind11),'+g'); axis equal,
 pTrainingError = length(indINCORRECT)/N, % Empirical estimate of training error probability
-legend('Wrong decisions for data from Class -1','Correct decisions for data from Class +1','Equilevel contours of the discriminant function' ), 
+legend('Incorrect Class -1','Correct Class +1'), 
 title('Training Data with Decisions'),
 hold off
 
 % Independent data
 dindep = SVMBest.predict(xIndep')'; 
-indINCORRECTv = find(lv.*dindep == -1); 
-indCORRECTv = find(lv.*dindep == 1);
+indINCORRECTv = find(lIndep.*dindep == -1); 
+indCORRECTv = find(lIndep.*dindep == 1);
 pTrainingErrorv = length(indINCORRECTv)/N,
-ind00 = find(dindep==-1 & lv==-1); 
-ind10 = find(dindep==1 & lv==-1); 
-ind01 = find(dindep==-1 & lv==1);
-ind11 = find(dindep==1 & lv==1);
+ind00 = find(dindep==-1 & lIndep==-1); 
+ind10 = find(dindep==1 & lIndep==-1); 
+ind01 = find(dindep==-1 & lIndep==1);
+ind11 = find(dindep==1 & lIndep==1);
 figure(5); plot(xIndep(1,ind00),xIndep(2,ind00),'og'); hold on; plot(xIndep(1,ind10),xIndep(2,ind10),'or');
 plot(xIndep(1,ind01),xIndep(2,ind01),'+r'); plot(xIndep(1,ind11),xIndep(2,ind11),'+g'); axis equal,
-legend('Wrong decisions for data from Class -1','Correct decisions for data from Class +1','Equilevel contours of the discriminant function' ), 
+legend('Incorrect Class -1','Correct Class +1'), 
 title('Validation Data with Decisions'),
 hold off
 
@@ -156,6 +156,7 @@ for sigmaCounter = 1:length(sigmaList)
         PCorrect(CCounter,sigmaCounter)= sum(Ncorrect)/N;
     end 
 end
+
 figure(6),
 contour(log10(CList),log10(sigmaList),PCorrect',20); xlabel('log_{10} C'), ylabel('log_{10} sigma'),
 title('Gaussian-SVM Cross-Val Accuracy Estimate'), axis equal,
@@ -172,31 +173,33 @@ ind00 = find(d==-1 & l==-1);
 ind10 = find(d==1 & l==-1); 
 ind01 = find(d==-1 & l==1);
 ind11 = find(d==1 & l==1);
+
 figure(7); plot(x(1,ind00),x(2,ind00),'og'); hold on; plot(x(1,ind10),x(2,ind10),'or');
 plot(x(1,ind01),x(2,ind01),'+r'); plot(x(1,ind11),x(2,ind11),'+g'); axis equal;
 pTrainingError = length(indINCORRECT)/N, %Empirical estimate of training error probability 
 % Grid search (unnecessary for linear kernels)
-Nx = 10100; Ny = 9900; xGrid = linspace(-10,10,Nx); yGrid = linspace(-10,10,Ny);
+Nx = 10100/2; Ny = 9900/2; xGrid = linspace(-4,4,Nx); yGrid = linspace(-4,4,Ny);
 [h,v] = meshgrid(xGrid,yGrid); dGrid = SVMBest.predict([h(:),v(:)]); zGrid = reshape(dGrid,Ny,Nx);
-figure(7), contour(xGrid,yGrid,zGrid,0); xlabel('x1'), ylabel('x2'), axis equal,
-legend('Correct decisions for data from Class -1','Wrong decisions for data from Class -1','Correct decisions for data from Class +1','Equilevel contours of the discriminant function' ), 
+figure(7), contour(xGrid,yGrid,zGrid,10); xlabel('x1'), ylabel('x2'), axis equal,
+legend('Correct Class -1','Incorrect Class -1','Incorrect Class +1','Correct Class +1','Equilevel contours of the discriminant function' ), 
 title('Training Data with Decisions'); hold off
+
 % Independent data
 dindep = SVMBest.predict(xIndep')'; 
-indINCORRECTv = find(lv.*dindep == -1); 
-indCORRECTv = find(lv.*dindep == 1);
+indINCORRECTv = find(lIndep.*dindep == -1); 
+indCORRECTv = find(lIndep.*dindep == 1);
 pTrainingErrorv = length(indINCORRECTv)/N,
-ind00 = find(dindep==-1 & lv==-1); 
-ind10 = find(dindep==1 & lv==-1); 
-ind01 = find(dindep==-1 & lv==1);
-ind11 = find(dindep==1 & lv==1);
+ind00 = find(dindep==-1 & lIndep==-1); 
+ind10 = find(dindep==1 & lIndep==-1); 
+ind01 = find(dindep==-1 & lIndep==1);
+ind11 = find(dindep==1 & lIndep==1);
 figure(8); plot(xIndep(1,ind00),xIndep(2,ind00),'og'); hold on; plot(xIndep(1,ind10),xIndep(2,ind10),'or');
 plot(xIndep(1,ind01),xIndep(2,ind01),'+r'); plot(xIndep(1,ind11),xIndep(2,ind11),'+g'); axis equal;
 %Grid search (unnecessary for linear kernels)
-Nx = 10100; Ny = 9900; xGrid = linspace(-10,10,Nx); yGrid = linspace(-10,10,Ny);
+Nx = 10100/2; Ny = 9900/2; xGrid = linspace(-4,4,Nx); yGrid = linspace(-4,4,Ny);
 [h,v] = meshgrid(xGrid,yGrid); dGrid = SVMBest.predict([h(:),v(:)]); zGrid = reshape(dGrid,Ny,Nx);
-figure(8),contour(xGrid,yGrid,zGrid,0); xlabel('x1'), ylabel('x2'), axis equal,
-legend('Correct decisions for data from Class -1','Wrong decisions for data from Class -1','Correct decisions for data from Class +1','Equilevel contours of the discriminant function' ), 
+figure(8),contour(xGrid,yGrid,zGrid,10); xlabel('x1'), ylabel('x2'), axis equal,
+legend('Correct Class -1','Incorrect Class -1','Incorrect Class +1','Correct Class +1','Equilevel contours of the discriminant function' ), 
 title('Validation Data with Decisions'); hold off
 
 %% Functions
