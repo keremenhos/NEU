@@ -101,16 +101,17 @@ bestNet = train(bestNet,Xtrain(1,:),Xtrain(2,:));
 yytest = bestNet(Xtest(1,:));
 testPer = perform(bestNet,Xtest(2,:),yytest);
 
-% Visualization
+%% Visualization
 figure(2)
 hold on
 stem(meanPer(:,1))
 stem(meanPer(:,2))
-title("Average Performance of the MLP Estimator Across Folds")
+title("MSE vs Perceptrons with Different Transfer Functions")
 xlabel("Number of Perceptrons") 
 ylabel("MSE")
 legend('Sigmoid','Softplus')
 hold off
+grid on
 
 figure(3)
 hold on
@@ -118,6 +119,6 @@ scatter(Xtest(1,:),Xtest(2,:));
 scatter(Xtest(1,:),yytest);
 hold off
 title("Best MLP Model on Test Data")
-xlabel("X1") 
-ylabel("X2")
+xlabel("X_{1}") 
+ylabel("X_{2}")
 legend('True','Predicted');
